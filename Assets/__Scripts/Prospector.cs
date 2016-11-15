@@ -18,7 +18,13 @@ public class Prospector : MonoBehaviour
 
     static public Prospector S;
     static public int SCORE_FROM_PREV_ROUND = 0;
+
     static public int HIGH_SCORE = 0;
+
+    public Vector3 fsPosMid  = new Vector3(0.5f, 0.9f,  0);
+    public Vector3 fsPosRun  = new Vector3(0.5f, 0.75f, 0);
+    public Vector3 fsPosMid2 = new Vector3(0.5f, 0.5f,  0);
+    public Vector3 fsPosEnd  = new Vector3(1.0f, 0.65f, 0);
 
     public Deck deck;
     public TextAsset deckXML;
@@ -39,6 +45,7 @@ public class Prospector : MonoBehaviour
     public int chain = 0; // of cards in this run
     public int scoreRun = 0;
     public int score = 0;
+    public FloatingScore faRun;
 
     void Awake()
     {
@@ -56,6 +63,7 @@ public class Prospector : MonoBehaviour
 
     void Start()
     {
+        Scoreboard.S.score = score;
         deck = GetComponent<Deck>();
         deck.InitDeck(deckXML.text);
         Deck.Shuffle(ref deck.cards);
@@ -334,8 +342,8 @@ public class Prospector : MonoBehaviour
     }
 
     // ScoreManager handles all of the scoring
-    void ScoreManager(ScoreEvent sEvt)
-    {
+    void ScoreManager(ScoreEvent sEvt) {
+        List<Vector3> fsPts;
         switch (sEvt)
         {
             // Same thing needs to happen whether it's a draw, a win, or a loss
@@ -345,10 +353,43 @@ public class Prospector : MonoBehaviour
                 chain = 0;          // Resets the score chain
                 score += scoreRun;  // Add scoreRun to total points
                 scoreRun = 0;       // Reset scoreRun
+                //AddnfsRun to the _scoreboard score
+                if (fsRun != null)
+                {
+                    //create points for the Bezier curve
+                    fsPts = new List<Vector3>();
+                    fsPts.Add(fsPosRun);
+                    fsPts.Add(fsPosMid2);
+                    fsPts.Add(fsPosEnd);
+                    fsRun.reportFinishTo = Scoreboard.S.gameObject;
+                    fsPosRun.Init(fsPts, 0, 1);
+                    //also adjust the fontsize
+                    fsPosRun.fontSizes = new List<float> (new float[] { 28, 26, 4 });
+                }
                 break;
             case ScoreEvent.mine:       // Remove a card
                 chain++;            // Increase the score chain
                 scoreRun += chain; // Add score for this card to run
+                //create a FloatingScore for this score 
+                FloatingScore fs;
+                //Move it from the mousePosition to fsPosRun
+                Vector3 p0 = Input.mousePosition;
+                p0.x /= Screen.width;
+                p0.y /= Screen.height;
+                fsPts = new List<Vector3>();
+                fsPts.Add(p0);
+                fsPts.Add(fsPosMid);
+                fsPts.Add(fsPosRun);
+                fs = Scoreboard.S.CreateFloatingScore(chain, fsPts);
+                fs.fontSizes = new List<float>(new float[] { 4, 50, 28 });
+                if (fsPosRun == null)
+                {
+                    fsRun = fs;
+                    fsRun.reportFinishTo = null;
+                }else
+                {
+                    fs.reportFinishTo = fsRun.gameObject;
+                }
                 break;
         }
 
