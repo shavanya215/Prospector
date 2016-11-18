@@ -80,22 +80,22 @@ public class Prospector : MonoBehaviour
             GTRoundResult = go.GetComponent<Text>();
         }
         // Make them invisible
-        ShowResultGTs(false);
+        //ShowResultGTs(false);
 
-        go = GameObject.Find("HighScore");
-        string hScore = "High Score: " + Utils.AddCommasToNumber(HIGH_SCORE);
-        go.GetComponent<Text>().text = hScore;
+        //go = GameObject.Find("HighScore");
+        //string hScore = "High Score: " + Utils.AddCommasToNumber(HIGH_SCORE);
+        //go.GetComponent<Text>().text = hScore;
     }
 
-    void ShowResultGTs(bool show)
-    {
-        GTGameOver.gameObject.SetActive(show);
-        GTRoundResult.gameObject.SetActive(show);
-    }
+    //void ShowResultGTs(bool show)
+    //{
+    //    GTGameOver.gameObject.SetActive(show);
+    //    GTRoundResult.gameObject.SetActive(show);
+    //}
 
     void Start()
     {
-        Scoreboard.S.score = score;
+        //Scoreboard.S.score = score;
         deck = GetComponent<Deck>();
         deck.InitDeck(deckXML.text);
         Deck.Shuffle(ref deck.cards);
@@ -459,7 +459,7 @@ public class Prospector : MonoBehaviour
                     print("Your final score for the game was: " + score);
                     GTRoundResult.text = "Your final score was: " + score;
                 }
-                ShowResultGTs(true);
+                //ShowResultGTs(true);
                 break;
             default:
                 print("score: " + score + " - scoreRun: " + scoreRun + " - chain: " + chain);
