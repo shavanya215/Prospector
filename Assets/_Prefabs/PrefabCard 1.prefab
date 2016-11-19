@@ -11,6 +11,7 @@ GameObject:
   - 212: {fileID: 21200000}
   - 114: {fileID: 11400000}
   - 65: {fileID: 6500000}
+  - 114: {fileID: 114000013416112774}
   m_Layer: 0
   m_Name: PrefabCard 1
   m_TagString: Untagged
@@ -110,3 +111,39 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 100000}
   m_IsPrefabParent: 1
+--- !u!114 &114000013416112774
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b36d627e03ccd474aa80c0b78c888246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  suit: 
+  rank: 0
+  color: {r: 0, g: 0, b: 0, a: 1}
+  colS: Black
+  decoGOs: []
+  pipGOs: []
+  back: {fileID: 0}
+  def:
+    face: 
+    rank: 0
+    pips: []
+  spriteRenderers: []
+  state: 0
+  hiddenBy: []
+  layoutID: 0
+  slotDef:
+    x: 0
+    y: 0
+    faceUp: 0
+    layerName: Default
+    layerID: 0
+    id: 0
+    hiddenBy: 
+    type: slot
+    stagger: {x: 0, y: 0}
